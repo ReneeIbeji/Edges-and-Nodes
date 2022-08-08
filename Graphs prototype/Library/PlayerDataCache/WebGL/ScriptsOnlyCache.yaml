@@ -1,10 +1,12 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - AudioManager
     - CameraMovementManager
     - GraphItemScript
     - GraphManager
     - GraphUIManager
+    - SystemManager
     - robotControl
     - toolBoxItem
     Unity.2D.Animation.Editor.dll:
@@ -12,20 +14,13 @@ ScriptsOnlyBuild:
     Unity.2D.IK.Editor.dll:
     - UnityEditor.U2D.IK.IKEditorManager
     Unity.2D.Tilemap.Editor.dll:
-    - UnityEditor.Tilemaps.GridBrush
     - UnityEditor.Tilemaps.GridPaintingState
     - UnityEditor.Tilemaps.GridPaletteBrushes
     - UnityEditor.Tilemaps.GridPalettes
     - UnityEditor.Tilemaps.SceneViewGridManager
     - UnityEditor.Tilemaps.SceneViewOpenTilePaletteHelper
     - UnityEditor.Tilemaps.TileDragAndDropManager
-    - UnityEditor.Tilemaps.TilemapEditorToolPreferences
     - UnityEditor.Tilemaps.TilemapPrefabStageHelper
-    Unity.2D.Tilemap.Extras.Editor.dll:
-    - UnityEditor.Tilemaps.GameObjectBrush
-    - UnityEditor.Tilemaps.GroupBrush
-    - UnityEditor.Tilemaps.LineBrush
-    - UnityEditor.Tilemaps.RandomBrush
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
     Unity.TextMeshPro.dll:
@@ -61,6 +56,7 @@ ScriptsOnlyBuild:
     - GraphUIManager/contentGraphItem
     - GraphUIManager/modeUI
     - Robot
+    - Sound
     - node
     - vertex
     Unity.TextMeshPro:
@@ -114,6 +110,9 @@ ScriptsOnlyBuild:
     methodName: changeRobotStartNode
   - assembly: Assembly-CSharp
     fullTypeName: GraphUIManager
+    methodName: pauseProgram
+  - assembly: Assembly-CSharp
+    fullTypeName: GraphUIManager
     methodName: onOpenField
   - assembly: Assembly-CSharp
     fullTypeName: GraphUIManager
@@ -124,6 +123,12 @@ ScriptsOnlyBuild:
   - assembly: Assembly-CSharp
     fullTypeName: GraphUIManager
     methodName: switchToEditMode
+  - assembly: Assembly-CSharp
+    fullTypeName: GraphUIManager
+    methodName: unPauseProgram
+  - assembly: Assembly-CSharp
+    fullTypeName: GraphUIManager
+    methodName: hideDisplayImportPanel
   - assembly: Assembly-CSharp
     fullTypeName: GraphUIManager
     methodName: startProgram
@@ -153,7 +158,28 @@ ScriptsOnlyBuild:
     methodName: onEditVertexWeightField
   - assembly: Assembly-CSharp
     fullTypeName: GraphUIManager
+    methodName: displayExportPanel
+  - assembly: Assembly-CSharp
+    fullTypeName: GraphUIManager
+    methodName: hideDisplayExportPanel
+  - assembly: Assembly-CSharp
+    fullTypeName: GraphUIManager
     methodName: switchToViewMode
+  - assembly: Assembly-CSharp
+    fullTypeName: GraphUIManager
+    methodName: importUserGraph
+  - assembly: Assembly-CSharp
+    fullTypeName: GraphUIManager
+    methodName: displayImportPanel
+  - assembly: Assembly-CSharp
+    fullTypeName: GraphUIManager
+    methodName: onOpenField
+  - assembly: Assembly-CSharp
+    fullTypeName: GraphUIManager
+    methodName: onExitField
+  - assembly: Assembly-CSharp
+    fullTypeName: GraphUIManager
+    methodName: onEditGraphNameBox
   sceneClasses:
     Assets/Scenes/SampleScene.unity:
     - Class: 1
@@ -225,7 +251,11 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 7368}
     - Class: 114
-      Script: {instanceID: 8710}
+      Script: {instanceID: 7860}
+    - Class: 114
+      Script: {instanceID: 8712}
+    - Class: 114
+      Script: {instanceID: 8854}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -541,13 +571,13 @@ ScriptsOnlyBuild:
     className: VariablesAsset
   - hash:
       serializedVersion: 2
-      Hash: 36f9cb720031fbc0e6aedbcac5a31656
+      Hash: 32b1ce93151e22973af03735bddf82f3
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GraphItemScript
   - hash:
       serializedVersion: 2
-      Hash: abfcedf78010958428ca8256b7a5d0d5
+      Hash: fb22033e2292da4a8353e7e9f5508da0
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GraphUIManager
@@ -625,7 +655,7 @@ ScriptsOnlyBuild:
     className: UnityOnPointerExitMessageListener
   - hash:
       serializedVersion: 2
-      Hash: 2bd9f2c1faf5289739c3ef5a8e4ab9a8
+      Hash: 0f54f57d2b40b75afbea856eae11d2bd
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GraphManager
@@ -991,6 +1021,12 @@ ScriptsOnlyBuild:
     className: UnityOnPointerEnterMessageListener
   - hash:
       serializedVersion: 2
+      Hash: 7d71c6ac3b1db75f3799f45080e12660
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: AudioManager
+  - hash:
+      serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -1123,6 +1159,12 @@ ScriptsOnlyBuild:
     className: ScrollRect
   - hash:
       serializedVersion: 2
+      Hash: 9394c47c71569afdf83e69e3c48dab78
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SystemManager
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
@@ -1214,4 +1256,4 @@ ScriptsOnlyBuild:
   platform: 20
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
-  playerPath: C:/Users/Renee/Documents/gamedev/Graphs prototype/test web build
+  playerPath: C:/Users/Renee/Documents/gamedev/Graphs/Graphs/test web build

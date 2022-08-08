@@ -422,7 +422,7 @@ public class GraphPlay : GraphInteractionMode
         uiManager.putAllNodesOnDropDown();
         robot.graph = graph;
         robot.robotScript = robot.robotGameobject.GetComponent<robotControl>();
-
+        uiManager.changeRobotStartNode();
         robot.robotScript.show();
     }
     public override void Process()
@@ -503,11 +503,11 @@ public class GraphPlay : GraphInteractionMode
         }
         else if (Com == "pauseProgram")
         {
-            robot.programInProgress = false;
+            robot.pauseProgram();
         }
         else if (Com == "continueProgram")
         {
-            robot.programInProgress = true;
+            robot.unPauseProgram();
         }
     }
 

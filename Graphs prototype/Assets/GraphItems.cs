@@ -41,6 +41,12 @@ public class Graph
 		vertices = _vertices;
 	}
 
+	public Graph()
+    {
+		nodes = new List<node>();
+		vertices = new List<vertex>();
+    }
+
 
 	
 
@@ -291,6 +297,24 @@ public class Graph
 		graphLoaded = true;
 	}
 
+	public void unDisplayGraph()
+    {
+		if (graphLoaded)
+		{
+			foreach (node Node in nodes)
+			{
+				GameObject.Destroy(Node.transform.gameObject);
+			}
+			foreach(vertex Edge in vertices)
+            {
+				GameObject.Destroy(Edge.transform.gameObject);
+				GameObject.Destroy(Edge.weightText);
+            }
+
+			graphLoaded = false;
+		}
+    }
+
 	node loadNewNode(node Node)
 	{
 		GameObject instantObject;
@@ -404,6 +428,12 @@ public class node : GraphItem
 {
 	public Vector2 position { get; set; }
 	
+	public node()
+	:base ("",GraphItemType.node)
+    {
+
+    }
+
 	public node(string _name,Vector2 _position)
 	:base ( _name,GraphItemType.node)
 	{
@@ -432,7 +462,7 @@ public class vertex : GraphItem
 {
 	public node start;
 	public node end;
-	public int weight;
+	public float weight;
 
 	public TMPro.TMP_Text weightText;
 
@@ -451,7 +481,18 @@ public class vertex : GraphItem
 		end = _end;
 	}
 
+	public vertex(string _name, node _start, node _end, float _weight)
+	: base(_name, GraphItemType.vertex)
+    {
+		name = _name;
+		start = _start;
+		end = _end;
+		weight = _weight;
+
+    }
+
 	public vertex()
+	:base("",GraphItemType.vertex)
     {
 
     }

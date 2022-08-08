@@ -23,6 +23,8 @@ public class GraphUIManager : MonoBehaviour
     bool justChangedObeject = false;
     GraphItem selectedItem;
 
+    public TMP_InputField graphNameInput;
+
 
     public GameObject NodeAttributeMenu;
     public TMP_InputField NodeAttributeName;
@@ -61,6 +63,13 @@ public class GraphUIManager : MonoBehaviour
 
     public TMP_Dropdown startNodeDropDown;
 
+    public GameObject exportPanel;
+    public TMP_InputField exportInputField;
+
+    public GameObject importPanel;
+    public TMP_InputField importInputField;
+
+
 
   
 
@@ -86,7 +95,7 @@ public class GraphUIManager : MonoBehaviour
         }
 
         mouseItem = Instantiate(itemTemplate, contentPanel.transform.position, Quaternion.identity);
-        mouseItem.transform.parent = contentPanel.transform.parent;
+        mouseItem.transform.SetParent(contentPanel.transform.parent);
 
         Destroy(mouseItem.GetComponent<toolBoxItem>());
         Destroy(mouseItem.GetComponent<Button>());
@@ -190,7 +199,7 @@ public class GraphUIManager : MonoBehaviour
             GameObject label =Instantiate(edgeWeightTextPrefab, Vector2.zero, Quaternion.identity);
             label.GetComponent<RectTransform>().position = proportionalPosition;
             label.name = "weight label";
-            label.transform.parent = weightsParent.transform;
+            label.transform.SetParent(weightsParent.transform);
             label.transform.localScale *= (canvasRectTransform.position.x / 481);
 
         edge.weightText = label.GetComponent<TMP_Text>();
@@ -284,12 +293,81 @@ public class GraphUIManager : MonoBehaviour
         }
     }
 
-    //play mode butttons
+    public void setGraphNameBox(string name)
+    {
+        graphNameInput.text = name;
+    }
+
+    public void onEditGraphNameBox()
+    {
+        graphManager.changeGraphName(graphNameInput.text);
+    }
+
+    //import and export graph
+
+
+    public void displayExportPanel()
+    {
+        graphManager.saveUserGraph();
+        exportPanel.SetActive(true);
+
+    }
+    public void hideDisplayExportPanel()
+    {
+        exportPanel.SetActive(false);
+    }
+
+    public void addTextToExport(string text)
+    {
+        exportInputField.text = text;
+    }
+
+    public void saveGraph()
+    {
+        graphManager.saveUserGraph();
+    }
+
+
+
+
+    public void displayImportPanel()
+    {
+        importPanel.SetActive(true);
+    }
+    public void hideDisplayImportPanel()
+    {
+        importPanel.SetActive(false);
+    }
+
+    public void importUserGraph()
+    {
+        graphManager.importUserGraph(importInputField.text);
+        hideDisplayImportPanel();
+    }
+
+    //robot stuff
+
+    //start robot program
 
     public void startProgram()
     {
         graphManager.stateMachine.InteractionMode.command("startProgram");
     }
+
+
+    //pause robot program
+    public void pauseProgram()
+    {
+        graphManager.stateMachine.InteractionMode.command("pauseProgram");
+    }
+
+    //unpause robot program
+    public void unPauseProgram()
+    {
+        graphManager.stateMachine.InteractionMode.command("continueProgram");
+    }
+
+    // robot log
 
     public void updateRobotLog()
     {
@@ -321,16 +399,19 @@ public class GraphUIManager : MonoBehaviour
 
     public void changeRobotStartNode()
     {
-
-        if(graphManager.stateMachine.InteractionMode.robot.startNode.script != null)
+        if (!graphManager.stateMachine.InteractionMode.robot.programInProgress && !graphManager.stateMachine.InteractionMode.robot.programPaused)
         {
-            graphManager.stateMachine.InteractionMode.robot.startNode.script.resetColour();
-        }
-        node assignNode = graphManager.stateMachine.InteractionMode.graph.findNode(startNodeDropDown.options[startNodeDropDown.value].text);
-        graphManager.stateMachine.InteractionMode.robot.startNode = assignNode;
+            if (graphManager.stateMachine.InteractionMode.robot.startNode.script != null)
+            {
+                graphManager.stateMachine.InteractionMode.robot.startNode.script.resetColour();
+            }
 
-        assignNode.script.hightlightPrimary();
-        graphManager.cameraMovementManager.includeAllObject(new List<Vector3> { assignNode.transform.position });
+            Debug.Log("Noded assigned");
+            node assignNode = graphManager.stateMachine.InteractionMode.graph.findNode(startNodeDropDown.options[startNodeDropDown.value].text);
+            graphManager.stateMachine.InteractionMode.robot.startNode = assignNode;
+            assignNode.script.hightlightPrimary();
+            graphManager.cameraMovementManager.includeAllObject(new List<Vector3> { assignNode.transform.position });
+        }
 
     }
 }

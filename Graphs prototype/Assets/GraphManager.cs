@@ -1,7 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.IO;
+using UnityEditor;
+using UnityEngine.UI;
 
 public class GraphManager : MonoBehaviour
 {
@@ -9,6 +13,7 @@ public class GraphManager : MonoBehaviour
     Camera cam;
     
     RectTransform canvasRectTransform;
+
 
     //Graph objects prefabs
 
@@ -25,6 +30,7 @@ public class GraphManager : MonoBehaviour
     public CameraMovementManager cameraMovementManager;
     public GraphUIManager graphUIManager;
 
+    public graphMode startGraphMode;
     public List<node> nodes = new List<node>();
     public List<vertex> vertices = new List<vertex>();
 
@@ -33,11 +39,15 @@ public class GraphManager : MonoBehaviour
     Vector3 lastmousePos;
     bool mouseDownLastFrame = false;
 
+    [TextArea]
+    public string importGraph;
+
 
 
     private void Start()
     {
-        //item to establish
+        importGraph = GameObject.FindGameObjectWithTag("SystemManager").GetComponent<SystemManager>().graphToLoad;
+        startGraphMode = GameObject.FindGameObjectWithTag("SystemManager").GetComponent<SystemManager>().startGraphMode;
         cam = Camera.main;
 
         GameObject.Find("Canvas").GetComponent<GraphUIManager>().graphManager = this;
@@ -47,7 +57,9 @@ public class GraphManager : MonoBehaviour
         cameraMovementManager = GameObject.FindGameObjectWithTag("CameraMovementManager").GetComponent<CameraMovementManager>();
         lastmousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
+
         //graph establish
+        /*
         nodes.Add(new node("A", new Vector2(0, 0)));
         nodes.Add(new node("B", new Vector2(5, 0)));
         nodes.Add(new node("C", new Vector2(2.5f, 5)));
@@ -64,10 +76,13 @@ public class GraphManager : MonoBehaviour
         graph.AddVertex("A", "B");
         graph.AddVertex("B", "C");
         graph.AddVertex("C", "A");
-        stateMachine = new GraphStateMachine(new GraphEdit(graph,robot));
 
-        stateMachine.InteractionMode.graph.displayGraph();
-        stateMachine.InteractionMode.Enter();
+        resetStateMachine(startGraphMode, graph, robot);
+
+        */
+
+        importUserGraph(importGraph);
+
     }
 
     private void Update()
@@ -80,6 +95,30 @@ public class GraphManager : MonoBehaviour
 
 
 
+    }
+
+    void resetStateMachine(graphMode mode, Graph graph, Robot robot)
+    {
+        graph.graphTransform = transform;
+        graph.nodePrefab = nodePrefab;
+        graph.vertexPrefab = vertexPrefab;
+        graph.uiManager = graphUIManager;
+
+        if (mode == graphMode.edit)
+        {
+            stateMachine = new GraphStateMachine(new GraphEdit(graph,robot));
+        } else if(mode == graphMode.play)
+        {
+            stateMachine = new GraphStateMachine(new GraphPlay(graph,robot));   
+        } else if(mode == graphMode.view)
+        {
+            stateMachine = new GraphStateMachine(new GraphView(graph, robot));
+        }
+
+
+        stateMachine.InteractionMode.graph.displayGraph();
+        stateMachine.InteractionMode.Enter();
+        graphUIManager.setGraphNameBox(stateMachine.InteractionMode.graph.name);
     }
 
 
@@ -177,9 +216,105 @@ public class GraphManager : MonoBehaviour
         lastmousePos = Input.mousePosition;
         mouseDownLastFrame = Input.GetMouseButton(1);
     }
+    public void importUserGraph(string text)
+    {
+
+        Graph newGraph = loadGraph(text);
 
 
+        if (stateMachine.InteractionMode.graph.graphLoaded)
+        {
+            stateMachine.InteractionMode.graph.unDisplayGraph();
+        }
 
+
+        resetStateMachine(graphMode.edit, newGraph, robot);
+
+    }
+
+    public void saveUserGraph()
+    {
+        Graph graph = stateMachine.InteractionMode.graph;
+        //string path = EditorUtility.OpenFolderPanel("Select folder to save graph to", "", "") + "/" +graph.name + ".txt";
+
+        string text = "";
+
+            text += graph.name + "\n";
+            text += "Nodes:" + Convert.ToString(graph.nodes.Count) + "\n";
+            foreach (node Node in graph.nodes)
+            {
+                text += (Node.name + "," + Node.position.x + "," + Node.position.y) + "\n";
+            }
+            text += ("Edges:" + Convert.ToString(graph.vertices.Count)) + "\n";
+            foreach (vertex Edge in graph.vertices)
+            {
+                text += (Edge.name + "," + Edge.start.name + "," + Edge.end.name + "," + Edge.weight) + "\n";
+            }
+
+        graphUIManager.addTextToExport(text);
+    }
+    public Graph loadGraph(string text)
+    {
+        string[] file = text.Split("\n");
+        int i = 0;
+        List<node> nodes = new List<node>();
+
+        string name = file[i];
+        i++;
+
+        int nodeNum = Convert.ToInt32(file[i].Split(":")[1]);
+            i++;
+
+            string line;
+            for (int z = 0; z < nodeNum; z++)
+            {
+
+                line = file[i];
+                i++;
+                string[] nodeValues = line.Split(",");
+                string nodeName = line.Split(",")[0];
+
+                Vector3 nodePos = new Vector3(float.Parse(nodeValues[1]), float.Parse(nodeValues[2]), 0);
+
+
+                nodes.Add(new node(nodeName, nodePos));
+            }
+
+            List<vertex> edges = new List<vertex>();
+
+            int edgeNum = Convert.ToInt32(file[i].Split(":")[1]);
+            i++;
+
+            for (int z = 0; z < edgeNum; z++)
+            {
+                line = file[i];
+                i++;
+                string[] edgeValues = line.Split(",");
+
+                string edgeName = edgeValues[0];
+                node edgeStartNode = nodes.Find(x => x.name == edgeValues[1]);
+                node edgeEndNode = nodes.Find(x => x.name == edgeValues[2]);
+                float edgeWeight = float.Parse(edgeValues[3]);
+
+                edges.Add(new vertex(edgeName, edgeStartNode, edgeEndNode, edgeWeight));
+            }
+
+
+            Graph newGraph = new Graph(name, nodes, edges);
+            newGraph.graphTransform = transform;
+            newGraph.nodePrefab = nodePrefab;
+            newGraph.vertexPrefab = vertexPrefab;
+            newGraph.uiManager = graphUIManager;
+
+            return newGraph;
+
+
+    }
+
+    public void changeGraphName(string newName)
+    {
+        stateMachine.InteractionMode.graph.name = newName;
+    }
 
     //Returns 'true' if we touched or hovering on Unity UI element.
     public bool IsPointerOverUIElement()

@@ -8,6 +8,7 @@ public class Robot
 {
     public bool programInProgress = false;
     public bool needToUpdateLog = false;
+    public bool programPaused;
 
     RobotProgram program;
     public ProgramType programType;
@@ -33,7 +34,6 @@ public class Robot
     public Robot(ProgramType _programType)
     {
         programType = _programType;
-        
 
         
     }
@@ -68,6 +68,28 @@ public class Robot
         program.stage = 0;
        
 
+    }
+    public void pauseProgram()
+    {
+        if (programInProgress)
+        {
+            programInProgress = false;
+            programPaused = true;
+            log.Add("PROGRAM PAUSED");
+            needToUpdateLog = true;
+        }
+
+    }
+
+    public void unPauseProgram()
+    {
+        if (programPaused)
+        {
+            programInProgress = true;
+            programPaused = false;
+            log.Add("PROGRAM UNPAUSED");
+            needToUpdateLog = true;
+        }
     }
 
     public void carryOutProgram()
