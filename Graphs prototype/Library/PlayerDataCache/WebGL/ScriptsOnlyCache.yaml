@@ -3,24 +3,38 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - AudioManager
     - CameraMovementManager
+    - FrontMenuManager
     - GraphItemScript
     - GraphManager
+    - GraphMenuItem
+    - GraphOptionPanel
     - GraphUIManager
     - SystemManager
+    - openEditorManager
     - robotControl
+    - slideManager
+    - slideSet
     - toolBoxItem
     Unity.2D.Animation.Editor.dll:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.IK.Editor.dll:
     - UnityEditor.U2D.IK.IKEditorManager
+    - UnityEditor.U2D.IK.IKGizmos
     Unity.2D.Tilemap.Editor.dll:
+    - UnityEditor.Tilemaps.GridBrush
     - UnityEditor.Tilemaps.GridPaintingState
     - UnityEditor.Tilemaps.GridPaletteBrushes
     - UnityEditor.Tilemaps.GridPalettes
     - UnityEditor.Tilemaps.SceneViewGridManager
     - UnityEditor.Tilemaps.SceneViewOpenTilePaletteHelper
     - UnityEditor.Tilemaps.TileDragAndDropManager
+    - UnityEditor.Tilemaps.TilemapEditorToolPreferences
     - UnityEditor.Tilemaps.TilemapPrefabStageHelper
+    Unity.2D.Tilemap.Extras.Editor.dll:
+    - UnityEditor.Tilemaps.GameObjectBrush
+    - UnityEditor.Tilemaps.GroupBrush
+    - UnityEditor.Tilemaps.LineBrush
+    - UnityEditor.Tilemaps.RandomBrush
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
     Unity.TextMeshPro.dll:
@@ -56,8 +70,10 @@ ScriptsOnlyBuild:
     - GraphUIManager/contentGraphItem
     - GraphUIManager/modeUI
     - Robot
+    - RobotProgram
     - Sound
     - node
+    - slide
     - vertex
     Unity.TextMeshPro:
     - TMPro.FaceInfo_Legacy
@@ -102,6 +118,18 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.SpriteState
     - UnityEngine.UI.Toggle/ToggleEvent
   methodsToPreserve:
+  - assembly: Assembly-CSharp
+    fullTypeName: openEditorManager
+    methodName: openEditor
+  - assembly: Assembly-CSharp
+    fullTypeName: FrontMenuManager
+    methodName: openGraphMenu
+  - assembly: Assembly-CSharp
+    fullTypeName: FrontMenuManager
+    methodName: closeGraphMenu
+  - assembly: Assembly-CSharp
+    fullTypeName: GraphOptionPanel
+    methodName: onClick
   - assembly: Assembly-CSharp
     fullTypeName: toolBoxItem
     methodName: onClick
@@ -161,7 +189,13 @@ ScriptsOnlyBuild:
     methodName: displayExportPanel
   - assembly: Assembly-CSharp
     fullTypeName: GraphUIManager
+    methodName: changeRobotProgram
+  - assembly: Assembly-CSharp
+    fullTypeName: GraphUIManager
     methodName: hideDisplayExportPanel
+  - assembly: Assembly-CSharp
+    fullTypeName: GraphUIManager
+    methodName: goToMainMenu
   - assembly: Assembly-CSharp
     fullTypeName: GraphUIManager
     methodName: switchToViewMode
@@ -181,7 +215,96 @@ ScriptsOnlyBuild:
     fullTypeName: GraphUIManager
     methodName: onEditGraphNameBox
   sceneClasses:
-    Assets/Scenes/SampleScene.unity:
+    Assets/Scenes/Editor.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 58
+      Script: {instanceID: 0}
+    - Class: 61
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 1566}
+    - Class: 114
+      Script: {instanceID: 1760}
+    - Class: 114
+      Script: {instanceID: 2642}
+    - Class: 114
+      Script: {instanceID: 2854}
+    - Class: 114
+      Script: {instanceID: 2872}
+    - Class: 114
+      Script: {instanceID: 3114}
+    - Class: 114
+      Script: {instanceID: 3472}
+    - Class: 114
+      Script: {instanceID: 3750}
+    - Class: 114
+      Script: {instanceID: 3796}
+    - Class: 114
+      Script: {instanceID: 4348}
+    - Class: 114
+      Script: {instanceID: 4454}
+    - Class: 114
+      Script: {instanceID: 4598}
+    - Class: 114
+      Script: {instanceID: 4738}
+    - Class: 114
+      Script: {instanceID: 5760}
+    - Class: 114
+      Script: {instanceID: 5780}
+    - Class: 114
+      Script: {instanceID: 5834}
+    - Class: 114
+      Script: {instanceID: 6010}
+    - Class: 114
+      Script: {instanceID: 6748}
+    - Class: 114
+      Script: {instanceID: 6952}
+    - Class: 114
+      Script: {instanceID: 7370}
+    - Class: 114
+      Script: {instanceID: 7382}
+    - Class: 114
+      Script: {instanceID: 7874}
+    - Class: 114
+      Script: {instanceID: 8726}
+    - Class: 114
+      Script: {instanceID: 8868}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
+      Script: {instanceID: 0}
+    - Class: 212
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    Assets/Scenes/Menu.unity:
     - Class: 1
       Script: {instanceID: 0}
     - Class: 4
@@ -196,66 +319,48 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 49
       Script: {instanceID: 0}
-    - Class: 61
-      Script: {instanceID: 0}
     - Class: 81
+      Script: {instanceID: 0}
+    - Class: 83
       Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
       Script: {instanceID: 1566}
     - Class: 114
-      Script: {instanceID: 1760}
+      Script: {instanceID: 2032}
     - Class: 114
-      Script: {instanceID: 2340}
+      Script: {instanceID: 2342}
     - Class: 114
-      Script: {instanceID: 2638}
+      Script: {instanceID: 2854}
     - Class: 114
-      Script: {instanceID: 2850}
+      Script: {instanceID: 3114}
     - Class: 114
-      Script: {instanceID: 2868}
+      Script: {instanceID: 3472}
     - Class: 114
-      Script: {instanceID: 3110}
+      Script: {instanceID: 3638}
     - Class: 114
-      Script: {instanceID: 3468}
+      Script: {instanceID: 4760}
     - Class: 114
-      Script: {instanceID: 3742}
+      Script: {instanceID: 5092}
     - Class: 114
-      Script: {instanceID: 3788}
+      Script: {instanceID: 5906}
     - Class: 114
-      Script: {instanceID: 4340}
+      Script: {instanceID: 6010}
     - Class: 114
-      Script: {instanceID: 4446}
+      Script: {instanceID: 6748}
     - Class: 114
-      Script: {instanceID: 4590}
+      Script: {instanceID: 6884}
     - Class: 114
-      Script: {instanceID: 4730}
+      Script: {instanceID: 6952}
     - Class: 114
-      Script: {instanceID: 4752}
+      Script: {instanceID: 7196}
     - Class: 114
-      Script: {instanceID: 5084}
+      Script: {instanceID: 7370}
     - Class: 114
-      Script: {instanceID: 5752}
+      Script: {instanceID: 7874}
     - Class: 114
-      Script: {instanceID: 5772}
-    - Class: 114
-      Script: {instanceID: 5826}
-    - Class: 114
-      Script: {instanceID: 6000}
-    - Class: 114
-      Script: {instanceID: 6738}
-    - Class: 114
-      Script: {instanceID: 6940}
-    - Class: 114
-      Script: {instanceID: 7356}
-    - Class: 114
-      Script: {instanceID: 7368}
-    - Class: 114
-      Script: {instanceID: 7860}
-    - Class: 114
-      Script: {instanceID: 8712}
-    - Class: 114
-      Script: {instanceID: 8854}
+      Script: {instanceID: 8868}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -264,7 +369,56 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 196
       Script: {instanceID: 0}
-    - Class: 212
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    Assets/Scenes/SlideDisplay.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 1566}
+    - Class: 114
+      Script: {instanceID: 2032}
+    - Class: 114
+      Script: {instanceID: 2854}
+    - Class: 114
+      Script: {instanceID: 3114}
+    - Class: 114
+      Script: {instanceID: 3594}
+    - Class: 114
+      Script: {instanceID: 6010}
+    - Class: 114
+      Script: {instanceID: 6748}
+    - Class: 114
+      Script: {instanceID: 6952}
+    - Class: 114
+      Script: {instanceID: 7370}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
       Script: {instanceID: 0}
     - Class: 213
       Script: {instanceID: 0}
@@ -337,6 +491,12 @@ ScriptsOnlyBuild:
     className: UnityOnMouseExitMessageListener
   - hash:
       serializedVersion: 2
+      Hash: 72353db91393d6ca406661f2a2555493
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: slideSet
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
@@ -397,7 +557,7 @@ ScriptsOnlyBuild:
     className: SkeletonAsset
   - hash:
       serializedVersion: 2
-      Hash: 69ffd02e7dd72fca56acd1a7b37559bf
+      Hash: 43099d8f1d5cb9ef7875abeb7ce658b0
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: toolBoxItem
@@ -547,6 +707,12 @@ ScriptsOnlyBuild:
     className: UnityOnMouseDownMessageListener
   - hash:
       serializedVersion: 2
+      Hash: 0cc194ce1e9e7ce1db763432f76f1130
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: slideManager
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
@@ -557,6 +723,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
     className: UnityOnScrollMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: 4127427b4f43837b2e2967d443694598
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: GraphOptionPanel
   - hash:
       serializedVersion: 2
       Hash: 8aa3d6ccbcb54ee8db6c1229854adaaa
@@ -577,7 +749,7 @@ ScriptsOnlyBuild:
     className: GraphItemScript
   - hash:
       serializedVersion: 2
-      Hash: fb22033e2292da4a8353e7e9f5508da0
+      Hash: d44e7ee1a461ee523d75c442f54d3017
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GraphUIManager
@@ -655,7 +827,7 @@ ScriptsOnlyBuild:
     className: UnityOnPointerExitMessageListener
   - hash:
       serializedVersion: 2
-      Hash: 0f54f57d2b40b75afbea856eae11d2bd
+      Hash: f8880f91446fc02996cbe5ae25e47c45
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GraphManager
@@ -859,6 +1031,12 @@ ScriptsOnlyBuild:
     className: Slider
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: openEditorManager
+  - hash:
+      serializedVersion: 2
       Hash: 3164bc883ff663a5cdb32d1ef7e7c0c5
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -937,6 +1115,12 @@ ScriptsOnlyBuild:
     className: AspectRatioFitter
   - hash:
       serializedVersion: 2
+      Hash: 27dd87adb2843d50a2c552e859a54ce8
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: GraphMenuItem
+  - hash:
+      serializedVersion: 2
       Hash: 760787567e1b60d64a3e421ab83ee14a
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
@@ -947,6 +1131,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
     className: UnityOnMouseUpAsButtonMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: 5f6021afa1c1e8a347268e2d05c74962
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: FrontMenuManager
   - hash:
       serializedVersion: 2
       Hash: 748dd2a2a28da4e618912da5ac45684b
@@ -1159,7 +1349,7 @@ ScriptsOnlyBuild:
     className: ScrollRect
   - hash:
       serializedVersion: 2
-      Hash: 9394c47c71569afdf83e69e3c48dab78
+      Hash: 8c4921d85122a57d62d76b00449f7602
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SystemManager
@@ -1255,5 +1445,8 @@ ScriptsOnlyBuild:
     className: UnityOnSliderValueChangedMessageListener
   platform: 20
   scenePathNames:
-  - Assets/Scenes/SampleScene.unity
-  playerPath: C:/Users/Renee/Documents/gamedev/Graphs/Graphs/test web build
+  - Assets/Scenes/Menu.unity
+  - Assets/Scenes/SlideDisplay.unity
+  - Assets/Scenes/Editor.unity
+  playerPath: C:/Users/Renee/Documents/gamedev/Graphs/Graphs/Edges and nodes web
+    build

@@ -9,6 +9,8 @@ TagManager:
   - CameraMovementManager
   - Canvas
   - SystemManager
+  - MenuGraphOption
+  - AudioManager
   layers:
   - Default
   - TransparentFX
