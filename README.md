@@ -1,4 +1,4 @@
-# Graphs
+# Edges and nodes
 
 A tool I made for learning graph algorithms for 3Blue1Browns Summer of math exposition 2
 
