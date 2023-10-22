@@ -1,0 +1,9 @@
+
+Nodes:3
+A,0,0
+B,5,0
+C,2.5,5
+Edges:3
+A,B
+B,C
+C,A

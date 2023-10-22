@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb4f2e5a461b7574e95ca505361d2b11, type: 3}
+  m_Name: points and connections
+  m_EditorClassIdentifier: 
+  title: POINTS AND CONNECTIONS
+  image: {fileID: 21300000, guid: a146385540f27ff439b353ab66da3321, type: 3}
+  scenes:
+  - SlideDisplay
+  - Editor
+  graphToLoad: 'Name
+
+    Nodes:2
+
+    A,-4.93865,0.3527606
+
+    B,5.983947,0.4537592
+
+    Edges:1
+
+    A-B,A,B,5
+
+
+'
+  startGraphMode: 0
+  slides: {fileID: 11400000, guid: 937952f5ca3610941a2d609bb615c27f, type: 2}
